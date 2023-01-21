@@ -136,7 +136,7 @@ https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-an
 ```json
 "build_systems": [
     {
-        "name": "🧪 Run Current Spec",
+        "name": "Run Current Spec",
         "target": "wsl_exec",
         "cancel": {"kill": true},
         "wsl_cmd": [
@@ -148,7 +148,7 @@ https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-an
         "wsl_working_dir": "$unix_folder"
     },
     {
-        "name": "🧪 Run All Specs",
+        "name": "Run All Specs",
         "target": "wsl_exec",
         "cancel": {"kill": true},
         "wsl_cmd": [
@@ -157,7 +157,7 @@ https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-an
         "wsl_working_dir": "$unix_folder",
     },
     {
-        "name": "🗃️ Run Database Migrations",
+        "name": "Run Database Migrations",
         "target": "wsl_exec",
         "cancel": {"kill": true},
         "wsl_cmd": [
