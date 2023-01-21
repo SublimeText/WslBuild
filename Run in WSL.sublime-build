@@ -1,0 +1,24 @@
+{
+	"target" : "wsl_exec",
+	"cancel": {"kill": true},
+	"wsl_cmd": ["./${file_name}"],
+	"wsl_working_dir": "${unix_file_path}",
+	// "wsl_env": {
+	// 	// unexpanded variable
+	// 	"PLAIN_VAR": "untranslated",
+	// 	// expanded sublime variable
+	// 	"EXPANDED_VAR": "${folders}",
+	// 	// path list variable translated to unix/windows style
+	// 	// depending on whether being passed to a unix or windows command
+	// 	"LIST_VAR/l": "%PATH%",
+	// 	// path variable translated to unix/windows style
+	// 	// depending on whether being passed to a unix or windows command
+	// 	"PATH_VAR/p": "%USERPROFILE%",
+	// 	// variable available to unix commands only
+	// 	"UNIX_VAR/u": "~/",
+	// 	// variable available to windows commands only
+	// 	"WIN_VAR/w": "%USERPROFILE%",
+	// },
+	"selector" : "source.shell",
+	"word_wrap": false,
+}
