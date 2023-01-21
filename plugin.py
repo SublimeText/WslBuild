@@ -68,13 +68,25 @@ class WslExecCommand(ExecCommand):
     For more information about it, visit:
     https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-and-windows
 
+    Example Build System to run file in WSL:
+    ===
+
+    ```jsonc
+    {
+        "target": "wsl_exec",
+        "cancel": {"kill": true},
+        "wsl_cmd": ["./$unix_file"],
+        "wsl_working_dir": "$unix_file_path",
+    }
+    ```
+
     Example Build Systems for a Rails app in WSL:
     ===
 
     ```jsonc
     "build_systems": [
         {
-            "name": "🧪 Run Current Spec",
+            "name": "Run Current Spec",
             "target": "wsl_exec",
             "wsl_cmd": [
                 "bundle", "exec", "rake", "spec"
@@ -91,7 +103,7 @@ class WslExecCommand(ExecCommand):
             "cancel": {"kill": true},
         },
         {
-            "name": "🧪 Run All Specs",
+            "name": "Run All Specs",
             "target": "wsl_exec",
             "wsl_cmd": [
                 "bundle", "exec", "rake", "spec"
@@ -100,7 +112,7 @@ class WslExecCommand(ExecCommand):
             "cancel": {"kill": true},
         },
         {
-            "name": "🗃️ Run Database Migrations",
+            "name": "Run Database Migrations",
             "target": "wsl_exec",
             "wsl_cmd": [
                 "bundle", "exec", "rake", "db:migrate"
