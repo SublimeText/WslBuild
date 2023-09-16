@@ -210,14 +210,14 @@ class WslExecCommand(ExecCommand):
         super().run(**wsl_args)
 
     def wsl_cmd(self, cmd, cwd):
-        """
+        r"""
         Set working directory within WSL2 and prepend "wsl" command
 
         Working directory may be given in Windows and Unix style.
 
         Working directory must be set within WSL via `cd cwd` as normal
         `working_dir` doesn't work for paths within WSL environment
-        which start with `\\\\wsl.localhost\\<distro>\\`.
+        which start with `\\wsl$\<distro>\` or `\\wsl.localhost\<distro>\`.
 
         :param cmd:
             The shell command to execute in WSL2
@@ -262,18 +262,27 @@ class WslExecCommand(ExecCommand):
         return env
 
     def wsl_path(self, path):
-        """
+        r"""
         Convert Windows path to Unix path
 
         :param path:
             The windows path string to convert
+
+            May point to folder in WSL:
+
+            - Win 10: ``\\wsl$\<distro>\<path>``
+            - Win 11: ``\\wsl.localhost\<distro>\<path>``
+
+            May point to windows folder:
+
+            - ``C:\<path>``
 
         :returns:
             The converted unix path string
         """
         # remove UNC prefix for paths pointing to WSL environment
         if path.startswith("\\\\"):
-            path = re.sub(r"\\\\wsl\.localhost\\[^\\]*", "", path)
+            path = re.sub(r"\\\\wsl(?:\.localhost|\$)\\[^\\]*", "", path)
         # convert local windows paths to WSL compliant unix format
         elif path[1:3] == ":\\":
             path = "".join(("/mnt/", path[0].lower(), path[2:]))
