@@ -77,6 +77,8 @@ Set `"target": "wsl_exec"` and `"cancel": {"kill": true}` to be able to cancel a
 
 Set `"wsl_cmd"` instead of `"cmd"`.  The command array will be executed through WSL.
 
+Can be a `string` or `list` of strings.
+
 > **Note**
 > 
 > Build variables such as $file have a $unix_file counter part with unix style paths.
@@ -126,7 +128,7 @@ https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-an
 {
     "target": "wsl_exec",
     "cancel": {"kill": true},
-    "wsl_cmd": ["./$unix_file"],
+    "wsl_cmd": "./$unix_file",
     "wsl_working_dir": "$unix_file_path",
 }
 ```
@@ -139,9 +141,7 @@ https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-an
         "name": "Run Current Spec",
         "target": "wsl_exec",
         "cancel": {"kill": true},
-        "wsl_cmd": [
-            "bundle", "exec", "rake", "spec" 
-        ],
+        "wsl_cmd": "bundle exec rake spec"
         "wsl_env": {
             "SPEC/p": "$file"
         },

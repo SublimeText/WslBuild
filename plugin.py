@@ -18,8 +18,10 @@ class WslExecCommand(ExecCommand):
     wsl_cmd
     ---
 
-    Set `wsl_cmd` instead of `cmd`. The command array will be executed through WSL.
+    Set `wsl_cmd` instead of `cmd`. The command is executed by WSL.
     Build variables such as $file have a $unix_file counter part with unix style paths.
+
+    Can be a `string` or `list` of strings.
 
     OPTIONAL KEYS
     ===
@@ -228,6 +230,8 @@ class WslExecCommand(ExecCommand):
         wsl = ["wsl"]
         if cwd:
             wsl += ["cd", self.wsl_path(cwd), ";"]
+        if isinstance(cmd, str):
+            return wsl + [a.strip() for a in cmd.split(" ")]
         return wsl + cmd
 
     def wsl_env(self, env):
