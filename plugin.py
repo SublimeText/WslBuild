@@ -1,5 +1,6 @@
 import re
 import sublime
+import subprocess
 
 from Default.exec import ExecCommand
 
@@ -177,7 +178,7 @@ class WslExecCommand(ExecCommand):
           unix style `$project_path`
     """
 
-    def run(self, wsl_cmd, wsl_working_dir="", wsl_env=None, **kwargs):
+    def run(self, wsl_cmd, wsl_working_dir="", wsl_env=None, external=False, **kwargs):
         # Drop certain arguments, which should not be passed to super class
         wsl_args = {
             k: v for k, v in kwargs.items()
@@ -185,7 +186,10 @@ class WslExecCommand(ExecCommand):
         }
 
         # Translate command paramter to what exec expects
-        wsl_args["cmd"] = self.wsl_cmd(wsl_cmd, wsl_working_dir)
+        if external is True:
+            wsl_args["shell_cmd"] = subprocess.list2cmdline(self.wsl_cmd(wsl_cmd, wsl_working_dir, True))
+        else:
+            wsl_args["cmd"] = self.wsl_cmd(wsl_cmd, wsl_working_dir, False)
 
         # Translate environment variables
         if wsl_env:
@@ -209,7 +213,7 @@ class WslExecCommand(ExecCommand):
 
         super().run(**wsl_args)
 
-    def wsl_cmd(self, cmd, cwd):
+    def wsl_cmd(self, cmd, cwd, external=False):
         r"""
         Set working directory within WSL2 and prepend "wsl" command
 
@@ -227,7 +231,7 @@ class WslExecCommand(ExecCommand):
         :returns:
             The full wsl command value to execute.
         """
-        wsl = ["wsl"]
+        wsl = ["start", "cmd", "/k", "wsl"] if external else ["wsl"]
         if cwd:
             wsl += ["cd", self.wsl_path(cwd), ";"]
         if isinstance(cmd, str):

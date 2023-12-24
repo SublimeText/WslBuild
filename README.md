@@ -122,6 +122,14 @@ is converted to:
 For more information about it, visit:
 https://devblogs.microsoft.com/commandline/share-environment-vars-between-wsl-and-windows
 
+#### external
+
+If `true`, then an external cmd.exe window will spawn with the command.
+
+> **Note**
+> 
+>  No output will be displayed in Sublime, therefore you cannot capture errors with `file_regex`, etc.
+
 ##### Example Build System to run file in WSL:
 
 ```json
